@@ -1,0 +1,39 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Chỉ chạy khi có code mới được push vào nhánh main
+  push:
+    branches: [ main ]
+  
+  # Cho phép ấn nút chạy thủ công để test
+  workflow_dispatch:
+
+# Cấp quyền ghi vào GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4 # Lưu ý: Bản v4 là bản ổn định nhất hiện nay
+
+      # Action này sẽ tự cài npm, build dự án Astro và chuẩn bị file upload
+      - name: Install, Build & Upload
+        uses: withastro/action@v2
+        # with:
+          # package-manager: pnpm # Bỏ comment dòng này nếu bạn dùng pnpm
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
