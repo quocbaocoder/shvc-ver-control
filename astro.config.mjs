@@ -1,14 +1,21 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 
-import cloudflare from "@astrojs/cloudflare";
+// 1. Xóa dòng import cloudflare vì GitHub Pages không dùng cái này
+// import cloudflare from "@astrojs/cloudflare"; 
 
 // https://astro.build/config
 export default defineConfig({
-  output: "server",
+  // 2. QUAN TRỌNG: Phải có site và base để Astro biết đường dẫn tải CSS/JS
+  site: "https://quocbaocoder.github.io",
+  base: "/shvc-ver-control",
+
+  // 3. GitHub Pages là web tĩnh, nên đổi thành 'static' (hoặc xóa dòng này vì mặc định là static)
+  // Tuyệt đối KHÔNG dùng "server" trên GitHub Pages
+  output: "static", 
+
   devToolbar: {
     enabled: false,
   },
@@ -18,8 +25,9 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  adapter: cloudflare({
-    imageService: "compile",
-    sessionKVBindingName: "VFDashboard",
-  }),
+  // 4. Xóa toàn bộ phần adapter cloudflare
+  // adapter: cloudflare({
+  //   imageService: "compile",
+  //   sessionKVBindingName: "VFDashboard",
+  // }),
 });
