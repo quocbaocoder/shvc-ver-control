@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   // 1. Phải đúng tên user của bạn
-  site: "https://github.com/quocbaocoder/shvc-ver-control",
+  site: "https://github.com/quocbaocoder/",
   
   // 2. Phải CHÍNH XÁC tên repo (phân biệt hoa thường)
   // Nếu repo là "shvc-ver-control", thì để như dưới. 
